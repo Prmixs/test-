@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div1 {
+            width: 250px;
+            height: 250px;
+            border: 1px solid #000;
+            padding: 50px;
+            text-align: center;
+            background-color: lightgray;
+            margin: 100px auto;
+        }
+
+        .div1 input {
+            width: 250px;
+            height: 30px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .div1 span {
+            margin-top: 5px;
+            font-size: 14px;
+            color: gray;
+        }
+
+        .div1 .testcode {
+            float: left;
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+            background-color: gray;
+            color: black;
+            margin: 10px 0 0 12px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var div = document.querySelector('.div1');
+            var username_span = document.getElementById('username_span');
+            var username = document.getElementById('username');
+            username.onblur = function () {
+                var Uvalue = username.value;
+                if (Uvalue.length < 6 || Uvalue.length > 18) {
+                    username_span.innerHTML = '!长度为6-18个字符';
+                    username_span.style.color = 'red';
+                } else if (!/[a-zA-Z]/.test(Uvalue[0])) {
+                    username_span.innerHTML = '!请以字母开头';
+                    username_span.style.color = 'red';
+                } else if (/\W/.test(Uvalue)) {
+                    username_span.innerHTML = '!不能使用特殊符号';
+                    username_span.style.color = 'red';
+                } else {
+                    username_span.innerHTML = '符合要求';
+                    username_span.style.color = 'green';
+                }
+            }
+            var password = document.getElementById('password');
+            var divs = div.getElementsByClassName('testcode');
+            console.log(divs);
+            password.onkeyup = function () {
+                var Nvalue = this.value;
+                if (Nvalue.length >= 6) {
+                    for (var i = 0; i < divs.length; i++) {
+                        divs[i].style.backgroundColor = 'gray';
+                    }
+                    // 开始强度验证
+                    if (/^\d+$/.test(Nvalue) || /^[a-z]+$/.test(Nvalue) || /^[A-Z]+$/.test(Nvalue)) {
+                        divs[0].style.backgroundColor = 'red';
+                    } else if (/\d/.test(Nvalue) && /[a-z]/.test(Nvalue) && /[A-Z]/.test(Nvalue)) {
+                        divs[2].style.backgroundColor = 'green';
+                    }
+                    else {
+                        divs[1].style.backgroundColor = 'yellow';
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="div1">
+        <input type="text" id="username" placeholder="用户名">
+        <span id="username_span">6-18字符，可使用字母、数字、下划线，以字母开头</span>
+        <input type="password" id="password" placeholder="密码">
+        <div class='testcode'>弱</div>
+        <div class='testcode'>中</div>
+        <div class='testcode'>强</div>
+    </div>
+</body>
+
+</html>
